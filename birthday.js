@@ -40,6 +40,22 @@ const canvas = $('tree');
 const ctx    = canvas.getContext('2d');
 const wishEl = $('wish');
 
+// Personalize the greeting from the URL, e.g. ?name=Aisha.
+// Keep the default generic when no name is supplied.
+const params = new URLSearchParams(window.location.search);
+const rawRecipientName = params.get('name');
+const recipientName = (rawRecipientName || '').trim().slice(0, 60);
+const safeRecipientName = recipientName.replace(/[<>]/g, '');
+const greeting = safeRecipientName ? `Happy Birthday ${safeRecipientName}` : 'Happy Birthday';
+$('wHero').textContent = greeting;
+const srWish = $('srWish');
+if (srWish) {
+  srWish.textContent = safeRecipientName
+    ? `Happy Birthday ${safeRecipientName}. Here’s to a wonderful year ahead.`
+    : 'Happy Birthday. Here’s to a wonderful year ahead.';
+}
+document.title = safeRecipientName ? `Happy Birthday, ${safeRecipientName} ♥` : 'Happy Birthday ♥ — a little film';
+
 const hero       = $('hero');
 const eyebrow    = $('eyebrow');
 const hint       = $('hint');
